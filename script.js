@@ -38,6 +38,7 @@
       "imp.stat": "imported products in store now",
       "imp.cta": "See all imported products",
       "imp.badge": "Imported",
+      "imp.drag": "Tip: grab any product and drop it into your basket",
       "why.title": "Why Best Shop",
       "f1.t": "Imported specialties", "f1.d": "Hard-to-find brands from the USA and Europe, always in stock.",
       "f2.t": "The best price", "f2.d": "Everything you need at prices that respect your budget.",
@@ -156,6 +157,7 @@
       "imp.stat": "منتج مستورد متوفر الآن",
       "imp.cta": "شاهد كل المنتجات المستوردة",
       "imp.badge": "مستورد",
+      "imp.drag": "جرّب: اسحب أي منتج وأفلته في السلة",
       "why.title": "لماذا بست شوب",
       "f1.t": "منتجات مستوردة مميزة", "f1.d": "ماركات من أمريكا وأوروبا يصعب إيجادها، متوفرة دائمًا.",
       "f2.t": "أفضل سعر", "f2.d": "كل ما تحتاجه بأسعار تناسب ميزانيتك.",
@@ -649,7 +651,7 @@
     table.innerHTML = SITE.hours.map((h) => `
       <tr class="${h.day === today ? "is-today" : ""}">
         <td>${t("days")[h.day]}</td>
-        <td dir="ltr">${h.open && h.close ? formatTime(h.open) + " – " + formatTime(h.close) : t("closed")}</td>
+        <td>${h.open && h.close ? `<bdi>${formatTime(h.open)}</bdi> – <bdi>${formatTime(h.close)}</bdi>` : t("closed")}</td>
       </tr>`).join("");
   }
 
@@ -747,6 +749,15 @@
   // Shared helpers for products.js
   window.BS = {
     t, esc, num, formatPrice, productCard, openProduct, renderAll,
+    // Used by space.js when a product is dropped on the basket.
+    addById(id) {
+      const p = registry[id];
+      if (!p) return false;
+      basket.add(p);
+      refreshAddButtons();
+      toast(t("basket.added"));
+      return true;
+    },
     lang: () => lang,
     onLangChange: (fn) => langListeners.push(fn),
     refreshIcons: () => window.lucide && window.lucide.createIcons(),
