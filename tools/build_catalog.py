@@ -7,6 +7,11 @@ import json, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
+# Products Talabat lists under "Imports" that Best Shop does not want shown as imported.
+NOT_IMPORTED = {
+    "3652dd56-1e6d-4099-a4ce-a2a4048689b0",  # Canary Wafer, 34g
+}
+
 CAT_AR = {
     "fruit-veg": "الخضار والفواكه", "bakery": "المخبوزات", "poultry-meat-seafood": "الدواجن واللحوم والأسماك",
     "deli": "الأجبان واللحوم الباردة", "roastery": "المحمص", "dairy-eggs": "الألبان والبيض",
@@ -82,7 +87,7 @@ def main():
         products.append({
             "id": p["id"], "t": p["title"], "d": p["description"], "p": p["price"],
             "o": p["originalPrice"] if p["originalPrice"] and p["originalPrice"] > p["price"] else None,
-            "img": p["image"], "c": p["category"], "s": p["subCategory"], "imp": 1 if p.get("imported") else 0,
+            "img": p["image"], "c": p["category"], "s": p["subCategory"], "imp": 1 if p.get("imported") and p["id"] not in NOT_IMPORTED else 0,
         })
     # Imported items first inside every listing, then by name
     products.sort(key=lambda x: (-x["imp"], x["t"].lower()))

@@ -27,6 +27,9 @@ window.SITE = {
 
   currency: { en: "JD", ar: "د.أ" },
 
+  // Basket orders sent from the website (via WhatsApp) must reach this total.
+  minOrder: 5,
+
   // Opening hours. Day numbers: 0 = Sunday ... 6 = Saturday. 24-hour times.
   // A closing time earlier than the opening time means "after midnight".
   hours: [

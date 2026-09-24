@@ -54,8 +54,8 @@
       "cat.items": "items",
       "order.eyebrow": "Delivery available",
       "order.title": "Stay home. We'll bring it to you.",
-      "order.lead": "Send us your list on WhatsApp, or order from our store on Talabat. Fast, easy and at the best price.",
-      "order.s1": "Send your shopping list",
+      "order.lead": "Fill your basket on this website and send it to us on WhatsApp in one tap, or order from our store on Talabat. Pay cash on delivery.",
+      "order.s1": "Add products to your basket",
       "order.s2": "We prepare your order fresh",
       "order.s3": "Delivered to your door",
       "order.wa": "Order on WhatsApp",
@@ -96,6 +96,28 @@
       "shop.empty": "No products match your search.",
       "shop.more": "Show more",
       "shop.note": "Product names, photos and prices come from our Talabat store and may change. Prices in store may differ.",
+      "basket.title": "Basket",
+      "basket.add": "Add to basket",
+      "basket.added": "Added to basket",
+      "basket.empty": "Your basket is empty.",
+      "basket.minNote": "Minimum order: {m}",
+      "basket.qty": "Quantity",
+      "basket.less": "Remove one",
+      "basket.more": "Add one",
+      "basket.subtotal": "Subtotal",
+      "basket.short": "Add {x} more to reach the {m} minimum order.",
+      "basket.minOk": "Minimum order reached.",
+      "basket.feeNote": "The store confirms the delivery fee and final total on WhatsApp.",
+      "basket.name": "Name",
+      "basket.address": "Delivery address",
+      "basket.notes": "Notes (optional)",
+      "basket.payment": "Payment",
+      "basket.cash": "Cash on delivery",
+      "basket.send": "Send order on WhatsApp",
+      "basket.clear": "Empty basket",
+      "basket.required": "Please add your name and delivery address.",
+      "basket.msgHead": "New order from the Best Shop website:",
+      "order.min": "Minimum order 5 JD",
       closed: "Closed",
       langButton: "العربية",
       marquee: ["✈️ Imported from the USA & Europe", "Fresh meat & chicken", "Cheeses", "Chocolates & snacks", "Daily essentials", "Best price", "Delivery available"],
@@ -150,8 +172,8 @@
       "cat.items": "منتج",
       "order.eyebrow": "خدمة التوصيل متوفرة",
       "order.title": "خليك بالبيت، واحنا منوصلك.",
-      "order.lead": "أرسل لنا قائمتك على واتساب، أو اطلب من متجرنا على طلبات. سريع وسهل وبأفضل سعر.",
-      "order.s1": "أرسل قائمة مشترياتك",
+      "order.lead": "املأ سلتك على هذا الموقع وأرسلها لنا عبر واتساب بضغطة واحدة، أو اطلب من متجرنا على طلبات. الدفع نقدًا عند الاستلام.",
+      "order.s1": "أضف المنتجات إلى سلتك",
       "order.s2": "نجهّز طلبك طازجًا",
       "order.s3": "نوصله حتى باب بيتك",
       "order.wa": "اطلب عبر واتساب",
@@ -192,6 +214,28 @@
       "shop.empty": "لا توجد منتجات مطابقة لبحثك.",
       "shop.more": "عرض المزيد",
       "shop.note": "أسماء المنتجات وصورها وأسعارها مأخوذة من متجرنا على طلبات وقد تتغير. قد تختلف الأسعار داخل المتجر.",
+      "basket.title": "السلة",
+      "basket.add": "أضف إلى السلة",
+      "basket.added": "تمت الإضافة إلى السلة",
+      "basket.empty": "سلتك فارغة.",
+      "basket.minNote": "الحد الأدنى للطلب: {m}",
+      "basket.qty": "الكمية",
+      "basket.less": "إزالة واحدة",
+      "basket.more": "إضافة واحدة",
+      "basket.subtotal": "المجموع",
+      "basket.short": "أضف {x} للوصول إلى الحد الأدنى للطلب {m}.",
+      "basket.minOk": "تم الوصول إلى الحد الأدنى للطلب.",
+      "basket.feeNote": "يؤكد المتجر أجرة التوصيل والمجموع النهائي عبر واتساب.",
+      "basket.name": "الاسم",
+      "basket.address": "عنوان التوصيل",
+      "basket.notes": "ملاحظات (اختياري)",
+      "basket.payment": "الدفع",
+      "basket.cash": "الدفع نقدًا عند الاستلام",
+      "basket.send": "أرسل الطلب عبر واتساب",
+      "basket.clear": "إفراغ السلة",
+      "basket.required": "يرجى إدخال الاسم وعنوان التوصيل.",
+      "basket.msgHead": "طلب جديد من موقع بست شوب:",
+      "order.min": "الحد الأدنى للطلب 5 د.أ",
       closed: "مغلق",
       langButton: "English",
       marquee: ["✈️ مستورد من أمريكا وأوروبا", "لحوم ودجاج طازج", "أجبان", "شوكولاتة وتسالي", "مواد تموينية", "أفضل سعر", "توصيل متوفر"],
@@ -225,8 +269,13 @@
   const imgUrl = (url, w) => url + (url.includes("?") ? "&" : "?") + "width=" + w;
 
   // ---------- Shared: product cards + viewer ----------
+  // Every product/offer shown on the page, so "add" buttons can look items up by id.
+  const registry = {};
+
   function productCard(p) {
+    registry[p.id] = p;
     const pct = p.o ? Math.round((1 - p.p / p.o) * 100) : 0;
+    const qty = basket.qty(p.id);
     return `
       <article class="product${p.imp ? " product--imp" : ""}">
         <button class="product__open" type="button" data-pid="${esc(p.id)}">
@@ -241,6 +290,9 @@
             ${p.o ? `<s>${formatPrice(p.o)}</s>` : ""}
           </span>
         </button>
+        <button class="product__add${qty ? " is-in" : ""}" type="button" data-add="${esc(p.id)}" aria-label="${esc(t("basket.add"))}: ${esc(p.t)}">
+          ${qty ? `<span>${qty}</span>` : `<i data-lucide="plus" aria-hidden="true"></i>`}
+        </button>
       </article>`;
   }
 
@@ -248,7 +300,7 @@
   function openViewer(html) {
     $("#viewerBody").innerHTML = html;
     if (window.lucide) window.lucide.createIcons();
-    if (viewer.showModal) viewer.showModal(); else viewer.setAttribute("open", "");
+    if (!viewer.open) { if (viewer.showModal) viewer.showModal(); else viewer.setAttribute("open", ""); }
   }
   function closeViewer() { if (viewer.close) viewer.close(); else viewer.removeAttribute("open"); }
   if (viewer) {
@@ -260,6 +312,7 @@
   }
 
   function openProduct(p, catName) {
+    registry[p.id] = p;
     const pct = p.o ? Math.round((1 - p.p / p.o) * 100) : 0;
     const desc = (p.d || "").split(/\n+/).map((l) => l.replace(/^[•\-\s]+/, "").trim()).filter(Boolean);
     openViewer(`
@@ -278,24 +331,219 @@
           </div>
           ${desc.length ? `<ul class="pd__desc" dir="auto">${desc.slice(0, 8).map((l) => `<li>${esc(l)}</li>`).join("")}</ul>` : ""}
           <div class="pd__actions">
-            <a class="btn btn--wa" href="${esc(waLink(t("product.waMsg").replace("{p}", p.t)))}" target="_blank" rel="noopener"><i data-lucide="message-circle" aria-hidden="true"></i><span>${t("product.wa")}</span></a>
+            <button class="btn btn--dark" type="button" data-add="${esc(p.id)}" data-close><i data-lucide="shopping-basket" aria-hidden="true"></i><span>${t("basket.add")}</span></button>
             <a class="btn btn--outline" href="${esc(SITE.social.talabat)}" target="_blank" rel="noopener"><i data-lucide="shopping-bag" aria-hidden="true"></i><span>${t("product.talabat")}</span></a>
           </div>
         </div>
       </div>`);
   }
 
-  function openPoster(o) {
+  function offerItem(o, i) {
+    return { id: "offer-" + i, t: o[lang], p: o.price, img: o.img, local: true };
+  }
+
+  function openPoster(o, i) {
+    const item = offerItem(o, i);
+    registry[item.id] = item;
     openViewer(`
       <figure class="poster-view">
         <img src="${esc(o.img)}" alt="${esc(o[lang])}">
         <figcaption>
           <strong>${esc(o[lang])}</strong>
           <span>${formatPrice(o.price)}</span>
-          <a class="btn btn--wa" href="${esc(waLink(t("product.waMsg").replace("{p}", o[lang])))}" target="_blank" rel="noopener"><i data-lucide="message-circle" aria-hidden="true"></i><span>${t("product.wa")}</span></a>
+          <button class="btn btn--dark" type="button" data-add="${esc(item.id)}" data-close><i data-lucide="shopping-basket" aria-hidden="true"></i><span>${t("basket.add")}</span></button>
         </figcaption>
       </figure>`);
   }
+
+  // ---------- Basket (orders are sent to the store on WhatsApp) ----------
+  const basket = (function () {
+    let items = [];
+    try { items = JSON.parse(localStorage.getItem("bs-basket") || "[]"); } catch (e) {}
+    const save = () => { try { localStorage.setItem("bs-basket", JSON.stringify(items)); } catch (e) {} };
+    const find = (id) => items.find((x) => x.id === id);
+    return {
+      items: () => items,
+      qty: (id) => (find(id) || {}).q || 0,
+      count: () => items.reduce((a, x) => a + x.q, 0),
+      total: () => Math.round(items.reduce((a, x) => a + x.p * x.q, 0) * 1000) / 1000,
+      add(p) {
+        const it = find(p.id);
+        if (it) it.q += 1; else items.push({ id: p.id, t: p.t, p: p.p, img: p.img, local: !!p.local, q: 1 });
+        save();
+      },
+      set(id, q) {
+        const it = find(id);
+        if (!it) return;
+        if (q <= 0) items = items.filter((x) => x.id !== id); else it.q = q;
+        save();
+      },
+      clear() { items = []; save(); },
+    };
+  })();
+
+  // Drawer + floating button are added by script so every page gets them.
+  document.body.insertAdjacentHTML("beforeend", `
+    <button class="basket-fab" id="basketFab" type="button" aria-haspopup="dialog">
+      <i data-lucide="shopping-basket" aria-hidden="true"></i>
+      <span class="basket-fab__label" data-i18n="basket.title">Basket</span>
+      <span class="basket-fab__count" id="basketCount">0</span>
+    </button>
+    <dialog class="drawer" id="basketDrawer" aria-labelledby="basketTitle">
+      <div class="drawer__head">
+        <h2 id="basketTitle" data-i18n="basket.title">Basket</h2>
+        <button class="viewer__close" type="button" data-close-basket aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+      </div>
+      <div class="drawer__body" id="basketBody"></div>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>`);
+
+  const drawer = $("#basketDrawer");
+  let toastTimer;
+  function toast(msg) {
+    const el = $("#toast");
+    el.textContent = msg;
+    el.classList.add("is-on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("is-on"), 1800);
+  }
+
+  function renderBasketCount() {
+    const n = basket.count();
+    $("#basketCount").textContent = num(n);
+    $("#basketFab").classList.toggle("is-empty", n === 0);
+    $("#basketFab").setAttribute("aria-label", t("basket.title") + " (" + n + ")");
+  }
+
+  function renderBasket() {
+    const items = basket.items();
+    const total = basket.total();
+    const min = SITE.minOrder || 0;
+    const short = Math.max(0, Math.round((min - total) * 1000) / 1000);
+    const pct = min ? Math.min(100, Math.round((total / min) * 100)) : 100;
+    const body = $("#basketBody");
+    if (!items.length) {
+      body.innerHTML = `
+        <div class="basket-empty">
+          <i data-lucide="shopping-basket" aria-hidden="true"></i>
+          <p>${t("basket.empty")}</p>
+          <p class="basket-min">${t("basket.minNote").replace("{m}", formatPrice(min))}</p>
+          <a class="btn btn--dark" href="products.html?imported=1" data-close-basket><span aria-hidden="true">✈️</span><span>${t("cta.imports")}</span></a>
+        </div>`;
+    } else {
+      body.innerHTML = `
+        <ul class="basket-list">
+          ${items.map((x) => `
+            <li class="basket-item">
+              <img src="${esc(x.local ? x.img : imgUrl(x.img, 120))}" alt="" referrerpolicy="no-referrer" width="56" height="56">
+              <div class="basket-item__info">
+                <span class="basket-item__name" dir="auto">${esc(x.t)}</span>
+                <span class="basket-item__price">${formatPrice(x.p * x.q)}</span>
+              </div>
+              <div class="qty" role="group" aria-label="${esc(t("basket.qty"))}">
+                <button type="button" data-qty="${esc(x.id)}" data-d="-1" aria-label="${esc(t("basket.less"))}"><i data-lucide="${x.q === 1 ? "trash-2" : "minus"}" aria-hidden="true"></i></button>
+                <span>${num(x.q)}</span>
+                <button type="button" data-qty="${esc(x.id)}" data-d="1" aria-label="${esc(t("basket.more"))}"><i data-lucide="plus" aria-hidden="true"></i></button>
+              </div>
+            </li>`).join("")}
+        </ul>
+        <div class="basket-sum">
+          <div class="basket-sum__row"><span>${t("basket.subtotal")}</span><strong>${formatPrice(total)}</strong></div>
+          <div class="min-bar${short ? "" : " is-ok"}">
+            <div class="min-bar__track"><span style="width:${pct}%"></span></div>
+            <p>${short ? t("basket.short").replace("{x}", formatPrice(short)).replace("{m}", formatPrice(min)) : t("basket.minOk")}</p>
+          </div>
+          <p class="basket-note">${t("basket.feeNote")}</p>
+        </div>
+        <form class="checkout" id="checkoutForm" novalidate>
+          <label><span>${t("basket.name")}</span><input name="name" autocomplete="name" required></label>
+          <label><span>${t("basket.address")}</span><textarea name="address" rows="2" autocomplete="street-address" required></textarea></label>
+          <label><span>${t("basket.notes")}</span><input name="notes"></label>
+          <fieldset class="pay">
+            <legend>${t("basket.payment")}</legend>
+            <label class="pay__opt"><input type="radio" name="pay" value="cash" checked><span>${t("basket.cash")}</span></label>
+          </fieldset>
+          <p class="form-error" id="checkoutError" hidden></p>
+          <button class="btn btn--wa btn--block" type="submit" ${short ? "disabled" : ""}>
+            <i data-lucide="message-circle" aria-hidden="true"></i><span>${t("basket.send")}</span>
+          </button>
+          <button class="link-btn" type="button" id="basketClear">${t("basket.clear")}</button>
+        </form>`;
+    }
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  function orderMessage(form) {
+    const lines = basket.items().map((x) => `• ${x.q} × ${x.t} — ${formatPrice(x.p * x.q)}`);
+    return [
+      t("basket.msgHead"),
+      "",
+      ...lines,
+      "",
+      `${t("basket.subtotal")}: ${formatPrice(basket.total())}`,
+      `${t("basket.name")}: ${form.name.value.trim()}`,
+      `${t("basket.address")}: ${form.address.value.trim()}`,
+      form.notes.value.trim() ? `${t("basket.notes")}: ${form.notes.value.trim()}` : null,
+      `${t("basket.payment")}: ${t("basket.cash")}`,
+    ].filter((l) => l !== null).join("\n");
+  }
+
+  function openBasket() {
+    renderBasket();
+    if (drawer.showModal) drawer.showModal(); else drawer.setAttribute("open", "");
+  }
+  function closeBasket() { if (drawer.close) drawer.close(); else drawer.removeAttribute("open"); }
+
+  // Keep product "+" buttons in sync with the basket.
+  function refreshAddButtons() {
+    $$("[data-add].product__add").forEach((b) => {
+      const q = basket.qty(b.dataset.add);
+      b.classList.toggle("is-in", q > 0);
+      b.innerHTML = q ? `<span>${num(q)}</span>` : `<i data-lucide="plus" aria-hidden="true"></i>`;
+    });
+    renderBasketCount();
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  document.addEventListener("click", (e) => {
+    const add = e.target.closest("[data-add]");
+    if (add) {
+      const p = registry[add.dataset.add];
+      if (p) {
+        basket.add(p);
+        refreshAddButtons();
+        toast(t("basket.added"));
+        if (add.hasAttribute("data-close")) closeViewer();
+      }
+      return;
+    }
+    if (e.target.closest("#basketFab")) { openBasket(); return; }
+    if (e.target === drawer || e.target.closest("[data-close-basket]")) { closeBasket(); return; }
+    const qb = e.target.closest("[data-qty]");
+    if (qb) {
+      basket.set(qb.dataset.qty, basket.qty(qb.dataset.qty) + Number(qb.dataset.d));
+      renderBasket();
+      refreshAddButtons();
+      return;
+    }
+    if (e.target.closest("#basketClear")) { basket.clear(); renderBasket(); refreshAddButtons(); }
+  });
+
+  document.addEventListener("submit", (e) => {
+    if (e.target.id !== "checkoutForm") return;
+    e.preventDefault();
+    const form = e.target;
+    const err = $("#checkoutError");
+    if (basket.total() < (SITE.minOrder || 0)) return;
+    if (!form.name.value.trim() || !form.address.value.trim()) {
+      err.textContent = t("basket.required");
+      err.hidden = false;
+      (form.name.value.trim() ? form.address : form.name).focus();
+      return;
+    }
+    err.hidden = true;
+    window.open(waLink(orderMessage(form)), "_blank", "noopener");
+  });
 
   // ---------- Shared renderers ----------
   function renderText() {
@@ -390,7 +638,7 @@
       </button>`).join("");
     grid.onclick = (e) => {
       const b = e.target.closest("[data-offer]");
-      if (b) openPoster(SITE.offers[+b.dataset.offer]);
+      if (b) openPoster(SITE.offers[+b.dataset.offer], +b.dataset.offer);
     };
   }
 
@@ -469,6 +717,8 @@
     renderHours();
     renderStatus();
     renderMap();
+    renderBasketCount();
+    if (drawer.open) renderBasket();
     langListeners.forEach((fn) => fn(lang));
     if (window.lucide) window.lucide.createIcons();
     setupReveal();
