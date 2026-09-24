@@ -1,47 +1,51 @@
 // ============================================================
 //  BEST SHOP — edit your store details here.
 //  Everything on the website reads from this file.
-//  Items marked TODO are placeholders: replace them before launch.
 // ============================================================
 
 window.SITE = {
   name: { en: "Best Shop", ar: "بست شوب" },
+  tagline: { en: "Your favorite store", ar: "متجرك المفضّل" },
 
-  // TODO: your real phone number, in international format (digits only for WhatsApp)
-  phone: "+000 00 000 0000",
-  whatsapp: "000000000000",
+  phone: "+962 7 9158 0780",
+  phoneLocal: "07 9158 0780",
+  whatsapp: "962791580780",
+  email: "supermarketbestshop@gmail.com",
 
-  // TODO: your real address
   address: {
-    en: "Main Street, City Center",
-    ar: "الشارع الرئيسي، وسط المدينة",
+    en: "Al-Gardens, Al-Baraka District, next to Al-Omariya Schools, Amman, Jordan",
+    ar: "الجاردنز - حي البركة - بجانب مدارس العمرية، عمّان، الأردن",
+  },
+  mapQuery: "Best Shop Supermarket, Al-Gardens, Amman, Jordan",
+
+  social: {
+    facebook: "https://www.facebook.com/supermarketbestshop/",
+    instagram: "https://www.instagram.com/supermarketbestshop/",
+    talabat: "https://www.talabat.com/jordan/best-shop-supermarket",
   },
 
-  // TODO: what to search on Google Maps to find your shop (e.g. "Best Shop Supermarket, Amman")
-  mapQuery: "",
+  currency: { en: "JD", ar: "د.أ" },
 
-  // TODO: currency shown next to prices
-  currency: { en: "$", ar: "$" },
-
-  // Opening hours. Day numbers: 0 = Sunday ... 6 = Saturday. Times are 24-hour.
-  // TODO: set your real hours
+  // Opening hours. Day numbers: 0 = Sunday ... 6 = Saturday. 24-hour times.
+  // A closing time earlier than the opening time means "after midnight".
+  // TODO: confirm Friday and Saturday hours.
   hours: [
-    { day: 6, open: "08:00", close: "23:00" },
-    { day: 0, open: "08:00", close: "23:00" },
-    { day: 1, open: "08:00", close: "23:00" },
-    { day: 2, open: "08:00", close: "23:00" },
-    { day: 3, open: "08:00", close: "23:00" },
-    { day: 4, open: "08:00", close: "23:00" },
-    { day: 5, open: "14:00", close: "23:00" },
+    { day: 6, open: "07:00", close: "02:00" },
+    { day: 0, open: "07:00", close: "02:00" },
+    { day: 1, open: "07:00", close: "02:00" },
+    { day: 2, open: "07:00", close: "02:00" },
+    { day: 3, open: "07:00", close: "02:00" },
+    { day: 4, open: "07:00", close: "02:00" },
+    { day: 5, open: "07:00", close: "02:00" },
   ],
 
-  // Weekly offers. TODO: replace with your real offers each week.
+  // Weekly offers. TODO: replace these SAMPLE offers with your real ones each week.
   offers: [
-    { icon: "apple",  en: "Red Apples (1 kg)",       ar: "تفاح أحمر (١ كغ)",       was: 2.5, now: 1.75 },
-    { icon: "milk",   en: "Fresh Milk (2 L)",        ar: "حليب طازج (٢ لتر)",      was: 3.2, now: 2.6 },
-    { icon: "croissant", en: "Butter Croissants (6)", ar: "كرواسون بالزبدة (٦)",   was: 4.0, now: 2.99 },
-    { icon: "beef",   en: "Chicken Breast (1 kg)",   ar: "صدر دجاج (١ كغ)",        was: 7.5, now: 5.9 },
-    { icon: "coffee", en: "Ground Coffee (500 g)",   ar: "قهوة مطحونة (٥٠٠ غ)",    was: 9.0, now: 6.75 },
-    { icon: "cup-soda", en: "Orange Juice (1 L)",    ar: "عصير برتقال (١ لتر)",    was: 2.8, now: 1.99 },
+    { icon: "beef",      en: "Fresh Chicken (1 kg)",   ar: "دجاج طازج (1 كغ)",     was: 2.95, now: 2.49 },
+    { icon: "milk",      en: "Fresh Milk (2 L)",       ar: "حليب طازج (2 لتر)",    was: 1.95, now: 1.65 },
+    { icon: "salad",     en: "Fresh Salads (500 g)",   ar: "سلطات طازجة (500 غ)",  was: 1.50, now: 1.20 },
+    { icon: "utensils",      en: "White Cheese (1 kg)",    ar: "جبنة بيضاء (1 كغ)",    was: 4.50, now: 3.75 },
+    { icon: "coffee",    en: "Arabic Coffee (500 g)",  ar: "قهوة عربية (500 غ)",   was: 6.00, now: 4.95 },
+    { icon: "apple",     en: "Red Apples (1 kg)",      ar: "تفاح أحمر (1 كغ)",     was: 1.25, now: 0.99 },
   ],
 };

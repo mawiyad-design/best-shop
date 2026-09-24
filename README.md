@@ -6,8 +6,9 @@ A fast, bilingual (English / Arabic) one-page website for Best Shop.
 
 Open **`config.js`** and change:
 
-- `phone`, `whatsapp` — your contact numbers
-- `address`, `mapQuery` — your location (the map appears once `mapQuery` is set)
+- `phone`, `whatsapp`, `email` — contact details
+- `social` — Facebook, Instagram and Talabat links
+- `address`, `mapQuery` — your location and map
 - `hours` — opening hours (the "Open now" badge updates automatically)
 - `currency` — the symbol shown next to prices
 - `offers` — this week's deals
