@@ -50,6 +50,7 @@
 
       <nav class="nav" id="nav" aria-label="Main">
         <a href="#imports" data-i18n="nav.imports">Imported</a>
+        <a href="#deals" data-i18n="nav.deals">Discounts</a>
         <a href="products.html" data-i18n="nav.products">All Products</a>
         <a href="#offers" data-i18n="nav.offers">Offers</a>
         <a href="#order" data-i18n="nav.order">Order</a>
@@ -129,16 +130,30 @@
       </div>
     </section>
 
-    <!-- ===== Features ===== -->
-    <section class="section section--features" aria-labelledby="whyTitle">
+    <!-- ===== Categories ===== -->
+    <section class="section" id="categories">
       <div class="container">
-        <h2 class="sr-only" id="whyTitle" data-i18n="why.title">Why Best Shop</h2>
-        <div class="features__grid">
-          <div class="feature"><span class="feature__icon"><i data-lucide="plane" aria-hidden="true"></i></span><h3 data-i18n="f1.t">Imported specialties</h3><p data-i18n="f1.d">Hard-to-find brands from the USA and Europe, always in stock.</p></div>
-          <div class="feature"><span class="feature__icon"><i data-lucide="badge-percent" aria-hidden="true"></i></span><h3 data-i18n="f2.t">The best price</h3><p data-i18n="f2.d">Everything you need at prices that respect your budget.</p></div>
-          <div class="feature"><span class="feature__icon"><i data-lucide="beef" aria-hidden="true"></i></span><h3 data-i18n="f3.t">Fresh every day</h3><p data-i18n="f3.d">Fresh meat and chicken, cheeses and salads daily.</p></div>
-          <div class="feature"><span class="feature__icon"><i data-lucide="truck" aria-hidden="true"></i></span><h3 data-i18n="f4.t">Fast delivery</h3><p data-i18n="f4.d">Order by WhatsApp or Talabat — we bring it to you.</p></div>
+        <div class="section__head">
+          <span class="eyebrow" data-i18n="cat.eyebrow">Shop by department</span>
+          <h2 data-i18n="cat.title">Everything you need, in one place</h2>
+          <p><span data-count="total">4,000+</span> <span data-i18n="cat.sub">products across every aisle.</span></p>
         </div>
+        <div class="dept-grid" id="catGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== Discounts ===== -->
+    <section class="section section--deals" id="deals">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow eyebrow--deal"><i data-lucide="badge-percent" aria-hidden="true"></i><span data-i18n="deal.eyebrow">Save now</span></span>
+          <h2 data-i18n="deal.title">Discounts</h2>
+          <p><span data-count="deals">75</span> <span data-i18n="deal.sub">products on discount right now — biggest savings first.</span></p>
+        </div>
+        <div class="product-grid product-grid--home" id="dealGrid"></div>
+        <p class="center-cta">
+          <a class="btn btn--dark" href="products.html?deals=1"><i data-lucide="badge-percent" aria-hidden="true"></i><span data-i18n="deal.cta">See all discounts</span><i data-lucide="arrow-right" class="flip-rtl" aria-hidden="true"></i></a>
+        </p>
       </div>
     </section>
 
@@ -160,15 +175,16 @@
       </div>
     </section>
 
-    <!-- ===== Categories ===== -->
-    <section class="section" id="categories">
+    <!-- ===== Features ===== -->
+    <section class="section section--features" aria-labelledby="whyTitle">
       <div class="container">
-        <div class="section__head">
-          <span class="eyebrow" data-i18n="cat.eyebrow">Shop by department</span>
-          <h2 data-i18n="cat.title">Everything you need, in one place</h2>
-          <p><span data-count="total">4,000+</span> <span data-i18n="cat.sub">products across every aisle.</span></p>
+        <h2 class="sr-only" id="whyTitle" data-i18n="why.title">Why Best Shop</h2>
+        <div class="features__grid">
+          <div class="feature"><span class="feature__icon"><i data-lucide="plane" aria-hidden="true"></i></span><h3 data-i18n="f1.t">Imported specialties</h3><p data-i18n="f1.d">Hard-to-find brands from the USA and Europe, always in stock.</p></div>
+          <div class="feature"><span class="feature__icon"><i data-lucide="badge-percent" aria-hidden="true"></i></span><h3 data-i18n="f2.t">The best price</h3><p data-i18n="f2.d">Everything you need at prices that respect your budget.</p></div>
+          <div class="feature"><span class="feature__icon"><i data-lucide="beef" aria-hidden="true"></i></span><h3 data-i18n="f3.t">Fresh every day</h3><p data-i18n="f3.d">Fresh meat and chicken, cheeses and salads daily.</p></div>
+          <div class="feature"><span class="feature__icon"><i data-lucide="truck" aria-hidden="true"></i></span><h3 data-i18n="f4.t">Fast delivery</h3><p data-i18n="f4.d">Order by WhatsApp or Talabat — we bring it to you.</p></div>
         </div>
-        <div class="dept-grid" id="catGrid"></div>
       </div>
     </section>
 

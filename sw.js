@@ -1,9 +1,9 @@
 /* Best Shop app service worker
    - Pages and product data: network first, cached copy when offline
-   - App files (CSS, JS, logos, posters): served from cache, refreshed in the background
+   - App files (CSS, JS, logos, posters): network first too, so updates show at once
    - Product photos from Talabat: cached as customers see them (up to 400)
    Bump VERSION whenever the site changes so phones pick up the new files. */
-const VERSION = "bs-v3";
+const VERSION = "bs-v5";
 const SHELL = `${VERSION}-shell`;
 const PHOTOS = `${VERSION}-photos`;
 const PHOTO_LIMIT = 400;
@@ -34,7 +34,10 @@ async function networkFirst(req) {
     if (res.ok) cache.put(req, res.clone());
     return res;
   } catch (err) {
-    return (await cache.match(req, { ignoreSearch: true })) || (await cache.match("./index.html"));
+    const cached = await cache.match(req, { ignoreSearch: true });
+    if (cached) return cached;
+    if (req.mode === "navigate") return cache.match("./index.html");
+    throw err;
   }
 }
 
@@ -72,6 +75,6 @@ self.addEventListener("fetch", (e) => {
   }
   if (url.origin !== self.location.origin) return;       // maps, WhatsApp, etc. go straight to the network
 
-  if (req.mode === "navigate" || url.pathname.endsWith(".json")) { e.respondWith(networkFirst(req)); return; }
-  e.respondWith(staleWhileRevalidate(req, SHELL));
+  // Our own pages, scripts, styles and data: always the newest when online, saved copy when offline
+  e.respondWith(networkFirst(req));
 });

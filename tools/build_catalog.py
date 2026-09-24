@@ -97,7 +97,10 @@ def main():
     (ROOT / "data" / "catalog.json").write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")),
                                                 encoding="utf-8")
     home = {"categories": [{k: c[k] for k in ("slug", "en", "ar", "image", "count")} for c in categories],
-            "imported": [p for p in products if p["imp"]], "total": out["total"]}
+            "imported": [p for p in products if p["imp"]],
+            # Discounted products, biggest saving first
+            "deals": sorted([p for p in products if p["o"]], key=lambda p: p["p"] / p["o"]),
+            "total": out["total"]}
     (ROOT / "data" / "home.json").write_text(json.dumps(home, ensure_ascii=False, separators=(",", ":")),
                                              encoding="utf-8")
     print(f"{len(products)} products, {out['importedCount']} imported, {len(categories)} categories")

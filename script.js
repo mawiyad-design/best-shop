@@ -39,6 +39,13 @@
       "imp.cta": "See all imported products",
       "imp.badge": "Imported",
       "imp.drag": "Tip: grab any product and drop it into your basket",
+      "nav.deals": "Discounts",
+      "deal.eyebrow": "Save now",
+      "deal.title": "Discounts",
+      "deal.sub": "products on discount right now — biggest savings first.",
+      "deal.cta": "See all discounts",
+      "shop.dealsOnly": "Discounts",
+      "shop.titleDeals": "Discounts",
       "why.title": "Why Best Shop",
       "f1.t": "Imported specialties", "f1.d": "Hard-to-find brands from the USA and Europe, always in stock.",
       "f2.t": "The best price", "f2.d": "Everything you need at prices that respect your budget.",
@@ -173,6 +180,13 @@
       "imp.cta": "شاهد كل المنتجات المستوردة",
       "imp.badge": "مستورد",
       "imp.drag": "جرّب: اسحب أي منتج وأفلته في السلة",
+      "nav.deals": "الخصومات",
+      "deal.eyebrow": "وفّر الآن",
+      "deal.title": "الخصومات",
+      "deal.sub": "منتج عليه خصم الآن — الأكبر توفيرًا أولًا.",
+      "deal.cta": "شاهد كل الخصومات",
+      "shop.dealsOnly": "الخصومات",
+      "shop.titleDeals": "الخصومات",
       "why.title": "لماذا بست شوب",
       "f1.t": "منتجات مستوردة مميزة", "f1.d": "ماركات من أمريكا وأوروبا يصعب إيجادها، متوفرة دائمًا.",
       "f2.t": "أفضل سعر", "f2.d": "كل ما تحتاجه بأسعار تناسب ميزانيتك.",
@@ -703,6 +717,7 @@
     if (!home) return;
     $$('[data-count="total"]').forEach((el) => (el.textContent = num(Math.floor(home.total / 100) * 100) + "+"));
     $$('[data-count="imported"]').forEach((el) => (el.textContent = num(home.imported.length)));
+    $$('[data-count="deals"]').forEach((el) => (el.textContent = num(home.deals.length)));
   }
 
   // A varied pick of imported items (one per sub-category in turn) for the home page.
@@ -726,6 +741,44 @@
       const b = e.target.closest("[data-pid]");
       if (!b) return;
       const p = home.imported.find((x) => x.id === b.dataset.pid);
+      const c = home.categories.find((x) => x.slug === p.c);
+      openProduct(p, c && c[lang]);
+    };
+  }
+
+  // Up to 3 fresh meat deals first, then one deal per department in turn, one per brand inside a department,
+  // each department's biggest saving first.
+  function pickDeals(list, n) {
+    const groups = {};
+    list.forEach((p) => (groups[p.c] = groups[p.c] || []).push(p));
+    for (const k in groups) {
+      const seen = new Set();
+      const first = [], rest = [];
+      groups[k].forEach((p) => {
+        const brand = p.t.split(/\s+/)[0].toLowerCase();
+        (seen.has(brand) ? rest : first).push(p);
+        seen.add(brand);
+      });
+      groups[k] = first.concat(rest);
+    }
+    const MEAT = "poultry-meat-seafood";
+    const out = (groups[MEAT] || []).splice(0, 3);   // fresh meat deals lead
+    const keys = Object.keys(groups).sort((a, b) => (b === MEAT) - (a === MEAT));
+    for (let i = 0; out.length < n && i < 50; i++) {
+      keys.forEach((k) => { if (groups[k][i] && out.length < n) out.push(groups[k][i]); });
+    }
+    return out;
+  }
+
+  // Discounts: biggest savings first, but mixed across aisles (not ten body sprays in a row)
+  function renderDeals() {
+    const grid = $("#dealGrid");
+    if (!grid || !home) return;
+    grid.innerHTML = pickDeals(home.deals, 10).map(productCard).join("");
+    grid.onclick = (e) => {
+      const b = e.target.closest("[data-pid]");
+      if (!b) return;
+      const p = home.deals.find((x) => x.id === b.dataset.pid);
       const c = home.categories.find((x) => x.slug === p.c);
       openProduct(p, c && c[lang]);
     };
@@ -827,6 +880,7 @@
     renderCounts();
     renderImports();
     renderCategories();
+    renderDeals();
     renderOffers();
     renderHours();
     renderStatus();

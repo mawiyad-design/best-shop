@@ -10,6 +10,7 @@
     cat: params.get("cat") || "",
     sub: params.get("sub") || "",
     imported: params.get("imported") === "1",
+    deals: params.get("deals") === "1",
     q: params.get("q") || "",
     sort: "featured",
     shown: PAGE,
@@ -23,6 +24,9 @@
   const searchEl = $("#search");
   const sortEl = $("#sort");
   const impBtn = $("#importedToggle");
+  const dealBtn = $("#dealsToggle");
+  // Imported / Discounts toggles that apply on top of department and search
+  const fits = (p) => (!state.imported || p.imp) && (!state.deals || p.o);
   searchEl.value = state.q;
 
   function syncUrl() {
@@ -30,6 +34,7 @@
     if (state.cat) p.set("cat", state.cat);
     if (state.sub) p.set("sub", state.sub);
     if (state.imported) p.set("imported", "1");
+    if (state.deals) p.set("deals", "1");
     if (state.q) p.set("q", state.q);
     history.replaceState(null, "", location.pathname + (p.toString() ? "?" + p : ""));
   }
@@ -39,8 +44,9 @@
     results = data.products.filter((p) =>
       (!state.cat || p.c === state.cat) &&
       (!state.sub || p.s === state.sub) &&
-      (!state.imported || p.imp) &&
+      fits(p) &&
       words.every((w) => p._q.includes(w)));
+    if (state.sort === "featured" && state.deals) results.sort((a, b) => a.p / a.o - b.p / b.o);
     if (state.sort === "price-asc") results.sort((a, b) => a.p - b.p);
     else if (state.sort === "price-desc") results.sort((a, b) => b.p - a.p);
     else if (state.sort === "name") results.sort((a, b) => a.t.localeCompare(b.t));
@@ -48,7 +54,7 @@
 
   function renderChips() {
     const lang = BS.lang();
-    const cats = data.categories.filter((c) => !state.imported || data.products.some((p) => p.imp && p.c === c.slug));
+    const cats = data.categories.filter((c) => data.products.some((p) => p.c === c.slug && fits(p)));
     $("#catChips").innerHTML =
       `<button type="button" class="chip-btn${!state.cat ? " is-active" : ""}" data-cat="">${BS.t("shop.all")}</button>` +
       cats.map((c) => `<button type="button" class="chip-btn${state.cat === c.slug ? " is-active" : ""}" data-cat="${BS.esc(c.slug)}">
@@ -56,7 +62,7 @@
           <span>${BS.esc(c[lang])}</span></button>`).join("");
 
     const cat = catBySlug[state.cat];
-    const subs = cat ? cat.subs.filter((s) => data.products.some((p) => p.c === cat.slug && p.s === s.slug && (!state.imported || p.imp))) : [];
+    const subs = cat ? cat.subs.filter((s) => data.products.some((p) => p.c === cat.slug && p.s === s.slug && fits(p))) : [];
     $("#subChips").innerHTML = subs.length > 1
       ? `<button type="button" class="sub-btn${!state.sub ? " is-active" : ""}" data-sub="">${BS.t("shop.allSub")}</button>` +
         subs.map((s) => `<button type="button" class="sub-btn${state.sub === s.slug ? " is-active" : ""}" data-sub="${BS.esc(s.slug)}">${BS.esc(s[lang])}</button>`).join("")
@@ -70,8 +76,12 @@
     $("#loadMore").hidden = state.shown >= results.length;
     impBtn.setAttribute("aria-pressed", String(state.imported));
     impBtn.classList.toggle("is-active", state.imported);
+    dealBtn.setAttribute("aria-pressed", String(state.deals));
+    dealBtn.classList.toggle("is-active", state.deals);
     const cat = catBySlug[state.cat];
-    document.querySelector("h1").textContent = cat ? cat[BS.lang()] : BS.t(state.imported ? "shop.titleImported" : "shop.title");
+    document.querySelector("h1").textContent = cat ? cat[BS.lang()]
+      : BS.t(state.deals ? "shop.titleDeals" : state.imported ? "shop.titleImported" : "shop.title");
+    BS.refreshIcons();   // draw the + / − icons on the new cards
   }
 
   function update(resetPaging = true) {
@@ -92,9 +102,17 @@
   sortEl.addEventListener("change", () => { state.sort = sortEl.value; update(); });
   impBtn.addEventListener("click", () => {
     state.imported = !state.imported;
-    if (state.cat && state.imported && !data.products.some((p) => p.imp && p.c === state.cat)) { state.cat = ""; state.sub = ""; }
+    keepCategoryIfPossible();
     update();
   });
+  dealBtn.addEventListener("click", () => {
+    state.deals = !state.deals;
+    keepCategoryIfPossible();
+    update();
+  });
+  function keepCategoryIfPossible() {
+    if (state.cat && !data.products.some((p) => p.c === state.cat && fits(p))) { state.cat = ""; state.sub = ""; }
+  }
   $("#catChips").addEventListener("click", (e) => {
     const b = e.target.closest("[data-cat]");
     if (!b) return;
