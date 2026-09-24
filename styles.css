@@ -767,3 +767,11 @@ html[dir="rtl"] .drawer[open] { animation-name: drawer-in-rtl; }
   .install { bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
   .install__btn { font-size: .85rem; }
 }
+
+/* Hero without the paragraph; the store description closes the page instead */
+.hero h1 { margin-bottom: 32px; }
+.about-end { position: relative; z-index: 1; padding-block: 8px 72px; }
+.about-end .lead {
+  max-width: 44em; margin: 0 auto; text-align: center; font-size: 1.1rem; color: var(--muted);
+  padding-top: 32px; border-top: 1px solid var(--stroke);
+}
