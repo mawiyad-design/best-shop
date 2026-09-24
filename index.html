@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Best Shop — Your Neighborhood Supermarket</title>
+  <meta name="description" content="Best Shop supermarket: fresh produce, bakery, dairy, meat and everyday essentials at great prices. See weekly offers, opening hours and directions.">
+  <meta name="theme-color" content="#0f6b3a">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+  <!-- ===== Header ===== -->
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a href="#top" class="brand" aria-label="Best Shop home">
+        <img src="favicon.svg" alt="" width="40" height="40">
+        <span class="brand__name" data-site="name">Best Shop</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="#categories" data-i18n="nav.categories">Departments</a>
+        <a href="#offers" data-i18n="nav.offers">Weekly Offers</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#visit" data-i18n="nav.visit">Visit Us</a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+          <i data-lucide="globe" aria-hidden="true"></i><span>العربية</span>
+        </button>
+        <a class="btn btn--primary btn--sm header__call" data-link="phone" href="#">
+          <i data-lucide="phone" aria-hidden="true"></i><span data-i18n="cta.call">Call us</span>
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+          <i data-lucide="menu" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <span class="status" id="openStatus"><span class="status__dot"></span><span class="status__text"></span></span>
+          <h1 data-i18n="hero.title">Fresh groceries.<br><span class="accent">Better prices.</span> Every day.</h1>
+          <p class="lead" data-i18n="hero.lead">Your neighborhood supermarket for farm-fresh produce, warm bakery goods and everything your home needs — all under one roof.</p>
+          <div class="hero__cta">
+            <a href="#offers" class="btn btn--accent"><i data-lucide="badge-percent" aria-hidden="true"></i><span data-i18n="cta.offers">See this week's offers</span></a>
+            <a href="#visit" class="btn btn--ghost"><i data-lucide="map-pin" aria-hidden="true"></i><span data-i18n="cta.directions">Get directions</span></a>
+          </div>
+          <ul class="hero__stats">
+            <li><strong>5,000+</strong><span data-i18n="stats.products">products</span></li>
+            <li><strong data-i18n="stats.dailyVal">Daily</strong><span data-i18n="stats.fresh">fresh deliveries</span></li>
+            <li><strong>7</strong><span data-i18n="stats.days">days a week</span></li>
+          </ul>
+        </div>
+
+        <div class="hero__visual" aria-hidden="true">
+          <div class="hero__circle"></div>
+          <div class="float-card float-card--1"><i data-lucide="apple"></i></div>
+          <div class="float-card float-card--2"><i data-lucide="croissant"></i></div>
+          <div class="float-card float-card--3"><i data-lucide="carrot"></i></div>
+          <div class="float-card float-card--4"><i data-lucide="milk"></i></div>
+          <div class="hero__basket"><i data-lucide="shopping-basket"></i></div>
+          <div class="hero__badge">
+            <span data-i18n="hero.badgeTop">Up to</span>
+            <strong>30%</strong>
+            <span data-i18n="hero.badgeBottom">off this week</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Features ===== -->
+    <section class="features" aria-label="Why shop with us">
+      <div class="container features__grid">
+        <div class="feature"><i data-lucide="leaf" aria-hidden="true"></i><div><h3 data-i18n="f1.t">Fresh every morning</h3><p data-i18n="f1.d">Fruit, vegetables and bread delivered daily.</p></div></div>
+        <div class="feature"><i data-lucide="tag" aria-hidden="true"></i><div><h3 data-i18n="f2.t">Honest prices</h3><p data-i18n="f2.d">Great value on the brands you love.</p></div></div>
+        <div class="feature"><i data-lucide="shield-check" aria-hidden="true"></i><div><h3 data-i18n="f3.t">Quality checked</h3><p data-i18n="f3.d">Carefully stored, always within date.</p></div></div>
+        <div class="feature"><i data-lucide="heart-handshake" aria-hidden="true"></i><div><h3 data-i18n="f4.t">Friendly service</h3><p data-i18n="f4.d">A team that knows you by name.</p></div></div>
+      </div>
+    </section>
+
+    <!-- ===== Categories ===== -->
+    <section class="section" id="categories">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow" data-i18n="cat.eyebrow">Shop by department</span>
+          <h2 data-i18n="cat.title">Everything you need, in one place</h2>
+        </div>
+        <div class="cat-grid" id="catGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== Offers ===== -->
+    <section class="section section--tint" id="offers">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow" data-i18n="off.eyebrow">This week only</span>
+          <h2 data-i18n="off.title">Weekly offers</h2>
+          <p data-i18n="off.sub">Prices valid in store while stocks last.</p>
+        </div>
+        <div class="offer-grid" id="offerGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section class="section" id="about">
+      <div class="container about">
+        <div class="about__visual" aria-hidden="true">
+          <div class="about__tile about__tile--a"><i data-lucide="store"></i></div>
+          <div class="about__tile about__tile--b"><i data-lucide="users"></i></div>
+          <div class="about__tile about__tile--c"><i data-lucide="truck"></i></div>
+          <div class="about__tile about__tile--d"><i data-lucide="sparkles"></i></div>
+        </div>
+        <div class="about__text">
+          <span class="eyebrow" data-i18n="about.eyebrow">About Best Shop</span>
+          <h2 data-i18n="about.title">A supermarket built around our neighbors</h2>
+          <p data-i18n="about.p1">Best Shop started with a simple idea: give families a clean, friendly place to buy fresh, quality groceries at fair prices.</p>
+          <p data-i18n="about.p2">Today we stock thousands of products — from local produce to international favorites — and we still greet every customer at the door.</p>
+          <ul class="checklist">
+            <li><i data-lucide="check" aria-hidden="true"></i><span data-i18n="about.c1">Locally sourced produce whenever possible</span></li>
+            <li><i data-lucide="check" aria-hidden="true"></i><span data-i18n="about.c2">Clean, bright and easy-to-shop aisles</span></li>
+            <li><i data-lucide="check" aria-hidden="true"></i><span data-i18n="about.c3">New offers every single week</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Visit ===== -->
+    <section class="section section--tint" id="visit">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow" data-i18n="visit.eyebrow">Come see us</span>
+          <h2 data-i18n="visit.title">Visit Best Shop</h2>
+        </div>
+        <div class="visit">
+          <div class="visit__card">
+            <div class="info-row">
+              <i data-lucide="map-pin" aria-hidden="true"></i>
+              <div><h3 data-i18n="visit.address">Address</h3><p data-site="address"></p></div>
+            </div>
+            <div class="info-row">
+              <i data-lucide="phone" aria-hidden="true"></i>
+              <div><h3 data-i18n="visit.phone">Phone</h3><p><a data-link="phone" data-site="phone" href="#" dir="ltr"></a></p></div>
+            </div>
+            <div class="info-row">
+              <i data-lucide="clock" aria-hidden="true"></i>
+              <div class="grow"><h3 data-i18n="visit.hours">Opening hours</h3><table class="hours" id="hoursTable"></table></div>
+            </div>
+            <div class="visit__actions">
+              <a class="btn btn--primary" data-link="maps" href="#" target="_blank" rel="noopener"><i data-lucide="navigation" aria-hidden="true"></i><span data-i18n="cta.directions">Get directions</span></a>
+              <a class="btn btn--whatsapp" data-link="whatsapp" href="#" target="_blank" rel="noopener"><i data-lucide="message-circle" aria-hidden="true"></i><span data-i18n="cta.whatsapp">WhatsApp us</span></a>
+            </div>
+          </div>
+          <div class="visit__map" id="mapBox"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#top" class="brand brand--light"><img src="favicon.svg" alt="" width="36" height="36"><span data-site="name">Best Shop</span></a>
+        <p data-i18n="footer.tag">Fresh groceries. Better prices. Every day.</p>
+      </div>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#categories" data-i18n="nav.categories">Departments</a>
+        <a href="#offers" data-i18n="nav.offers">Weekly Offers</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#visit" data-i18n="nav.visit">Visit Us</a>
+      </nav>
+      <p class="footer__copy">© <span id="year"></span> <span data-site="name">Best Shop</span>. <span data-i18n="footer.rights">All rights reserved.</span></p>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp button -->
+  <a class="wa-float" data-link="whatsapp" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <i data-lucide="message-circle" aria-hidden="true"></i>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
