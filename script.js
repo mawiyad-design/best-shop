@@ -128,6 +128,9 @@
       "app.dismiss": "Not now",
       "basket.send": "Send order on WhatsApp",
       "basket.clear": "Empty basket",
+      "basket.confirmClear": "Remove all products from your basket?",
+      "basket.confirmYes": "Yes, empty it",
+      "basket.confirmNo": "Keep my basket",
       "basket.required": "Please add your name and delivery address.",
       "basket.msgHead": "New order from the Best Shop website:",
       "order.min": "Minimum order 5 JD",
@@ -259,6 +262,9 @@
       "app.dismiss": "ليس الآن",
       "basket.send": "أرسل الطلب عبر واتساب",
       "basket.clear": "إفراغ السلة",
+      "basket.confirmClear": "هل تريد حذف كل المنتجات من سلتك؟",
+      "basket.confirmYes": "نعم، أفرغ السلة",
+      "basket.confirmNo": "أبقِ السلة",
       "basket.required": "يرجى إدخال الاسم وعنوان التوصيل.",
       "basket.msgHead": "طلب جديد من موقع بست شوب:",
       "order.min": "الحد الأدنى للطلب 5 د.أ",
@@ -474,7 +480,6 @@
           <i data-lucide="shopping-basket" aria-hidden="true"></i>
           <p>${t("basket.empty")}</p>
           <p class="basket-min">${t("basket.minNote").replace("{m}", formatPrice(min))}</p>
-          <a class="btn btn--dark" href="products.html?imported=1" data-close-basket><span aria-hidden="true">✈️</span><span>${t("cta.imports")}</span></a>
         </div>`;
     } else {
       body.innerHTML = `
@@ -525,6 +530,13 @@
             <i data-lucide="message-circle" aria-hidden="true"></i><span>${t("basket.send")}</span>
           </button>
           <button class="link-btn" type="button" id="basketClear">${t("basket.clear")}</button>
+          <div class="confirm-clear" id="confirmClear" role="alertdialog" aria-labelledby="confirmClearText" hidden>
+            <p id="confirmClearText">${t("basket.confirmClear")}</p>
+            <div class="confirm-clear__actions">
+              <button class="btn btn--sm confirm-clear__yes" type="button" id="confirmClearYes">${t("basket.confirmYes")}</button>
+              <button class="btn btn--sm btn--outline" type="button" id="confirmClearNo">${t("basket.confirmNo")}</button>
+            </div>
+          </div>
         </form>`;
     }
     if (window.lucide) window.lucide.createIcons();
@@ -607,7 +619,20 @@
       else selectAlias();
       return;
     }
-    if (e.target.closest("#basketClear")) { basket.clear(); renderBasket(); refreshAddButtons(); }
+    if (e.target.closest("#basketClear")) {
+      // Ask first: emptying can't be undone
+      $("#basketClear").hidden = true;
+      $("#confirmClear").hidden = false;
+      $("#confirmClearNo").focus();
+      return;
+    }
+    if (e.target.closest("#confirmClearNo")) {
+      $("#confirmClear").hidden = true;
+      $("#basketClear").hidden = false;
+      $("#basketClear").focus();
+      return;
+    }
+    if (e.target.closest("#confirmClearYes")) { basket.clear(); renderBasket(); refreshAddButtons(); }
   });
 
   function selectAlias() {

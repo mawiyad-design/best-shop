@@ -775,3 +775,13 @@ html[dir="rtl"] .drawer[open] { animation-name: drawer-in-rtl; }
   max-width: 44em; margin: 0 auto; text-align: center; font-size: 1.1rem; color: var(--muted);
   padding-top: 32px; border-top: 1px solid var(--stroke);
 }
+
+/* Confirm before emptying the basket */
+.confirm-clear {
+  display: grid; gap: 10px; padding: 14px; border-radius: 12px; text-align: center;
+  background: rgba(248, 113, 113, .08); border: 1px solid rgba(248, 113, 113, .45);
+}
+.confirm-clear p { margin: 0; font-weight: 700; color: #fff; }
+.confirm-clear__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.confirm-clear__yes { background: var(--red); border-color: var(--red); color: #1a0000; }
+.confirm-clear__yes:hover { box-shadow: 0 0 24px rgba(248, 113, 113, .5); }
