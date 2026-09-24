@@ -274,6 +274,15 @@
   // Every product/offer shown on the page, so "add" buttons can look items up by id.
   const registry = {};
 
+  // "+" when not in the basket; "− qty +" once it is.
+  function ctlHTML(id, qty) {
+    const name = registry[id] ? registry[id].t : "";
+    const plus = `<button class="ctl-btn ctl-btn--add" type="button" data-add="${esc(id)}" aria-label="${esc(t(qty ? "basket.more" : "basket.add"))}: ${esc(name)}"><i data-lucide="plus" aria-hidden="true"></i></button>`;
+    if (!qty) return plus;
+    return `<button class="ctl-btn ctl-btn--sub" type="button" data-sub="${esc(id)}" aria-label="${esc(t("basket.less"))}: ${esc(name)}"><i data-lucide="${qty === 1 ? "trash-2" : "minus"}" aria-hidden="true"></i></button>
+      <span class="ctl-qty" aria-live="polite">${num(qty)}</span>${plus}`;
+  }
+
   function productCard(p) {
     registry[p.id] = p;
     const pct = p.o ? Math.round((1 - p.p / p.o) * 100) : 0;
@@ -287,14 +296,14 @@
             ${pct > 0 ? `<span class="badge badge--sale" dir="ltr">-${pct}%</span>` : ""}
           </span>
           <span class="product__name" dir="auto">${esc(p.t)}</span>
+        </button>
+        <div class="product__foot">
           <span class="product__price">
             <strong>${formatPrice(p.p)}</strong>
             ${p.o ? `<s>${formatPrice(p.o)}</s>` : ""}
           </span>
-        </button>
-        <button class="product__add${qty ? " is-in" : ""}" type="button" data-add="${esc(p.id)}" aria-label="${esc(t("basket.add"))}: ${esc(p.t)}">
-          ${qty ? `<span>${qty}</span>` : `<i data-lucide="plus" aria-hidden="true"></i>`}
-        </button>
+          <div class="product__ctl${qty ? " is-in" : ""}" data-ctl="${esc(p.id)}">${ctlHTML(p.id, qty)}</div>
+        </div>
       </article>`;
   }
 
@@ -320,7 +329,7 @@
     openViewer(`
       <div class="pd">
         <div class="pd__media">
-          <img src="${esc(imgUrl(p.img, 600))}" alt="${esc(p.t)}" referrerpolicy="no-referrer">
+          <img src="${esc(imgUrl(p.img, 300))}" data-hi="${esc(imgUrl(p.img, 600))}" alt="${esc(p.t)}" referrerpolicy="no-referrer">
           ${p.imp ? `<span class="badge badge--imp"><span aria-hidden="true">✈️</span>${t("imp.badge")}</span>` : ""}
         </div>
         <div class="pd__info">
@@ -338,10 +347,21 @@
           </div>
         </div>
       </div>`);
+    upgradeImage();
   }
 
   function offerItem(o, i) {
     return { id: "offer-" + i, t: o[lang], p: o.price, img: o.img, local: true };
+  }
+
+  // Show the already-loaded small photo at once, swap in the sharp one when ready.
+  function upgradeImage() {
+    const img = $("#viewerBody img[data-hi]");
+    if (!img) return;
+    const hi = new Image();
+    hi.referrerPolicy = "no-referrer";
+    hi.onload = () => { if (img.isConnected) img.src = hi.src; };
+    hi.src = img.dataset.hi;
   }
 
   function openPoster(o, i) {
@@ -496,12 +516,12 @@
   }
   function closeBasket() { if (drawer.close) drawer.close(); else drawer.removeAttribute("open"); }
 
-  // Keep product "+" buttons in sync with the basket.
+  // Keep product "+ / −" controls in sync with the basket.
   function refreshAddButtons() {
-    $$("[data-add].product__add").forEach((b) => {
-      const q = basket.qty(b.dataset.add);
-      b.classList.toggle("is-in", q > 0);
-      b.innerHTML = q ? `<span>${num(q)}</span>` : `<i data-lucide="plus" aria-hidden="true"></i>`;
+    $$("[data-ctl]").forEach((c) => {
+      const q = basket.qty(c.dataset.ctl);
+      c.classList.toggle("is-in", q > 0);
+      c.innerHTML = ctlHTML(c.dataset.ctl, q);
     });
     renderBasketCount();
     if (window.lucide) window.lucide.createIcons();
@@ -517,6 +537,13 @@
         toast(t("basket.added"));
         if (add.hasAttribute("data-close")) closeViewer();
       }
+      return;
+    }
+    const sub = e.target.closest("[data-sub]");
+    if (sub) {
+      basket.set(sub.dataset.sub, basket.qty(sub.dataset.sub) - 1);
+      refreshAddButtons();
+      if (drawer.open) renderBasket();
       return;
     }
     if (e.target.closest("#basketFab")) { openBasket(); return; }

@@ -234,7 +234,7 @@
   document.addEventListener("pointerdown", (e) => {
     if (e.button !== 0) return;
     const open = e.target.closest(".product__open");
-    if (!open || e.target.closest(".product__add")) return;
+    if (!open) return;
     const card = open.closest(".product");
     drag = { id: open.dataset.pid, card, x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, type: e.pointerType, active: false, pid: e.pointerId };
     // Touch: press and hold to pick up (so normal scrolling still works)
