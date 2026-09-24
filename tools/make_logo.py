@@ -43,3 +43,24 @@ if __name__ == "__main__":
     badge.resize((180, 180), Image.LANCZOS).save("img/apple-touch-icon.png", optimize=True)
     badge.resize((64, 64), Image.LANCZOS).save("img/favicon.png", optimize=True)
     print("ok")
+
+
+def app_icon(size, logo_ratio):
+    """Square app icon: the round logo centered on the deep-space background."""
+    bg = Image.new("RGBA", (size, size), (4, 5, 13, 255))
+    glow = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    ImageDraw.Draw(glow).ellipse([size * .08, size * .08, size * .92, size * .92], fill=(255, 240, 0, 60))
+    from PIL import ImageFilter
+    bg.alpha_composite(glow.filter(ImageFilter.GaussianBlur(size * .06)))
+    logo = draw(int(size * logo_ratio), background=False)
+    off = (size - logo.width) // 2
+    bg.alpha_composite(logo, (off, off))
+    return bg.convert("RGB")
+
+
+def make_app_icons():
+    app_icon(192, .86).save("img/icon-192.png", optimize=True)
+    app_icon(512, .86).save("img/icon-512.png", optimize=True)
+    # Maskable: keep the logo inside the 80% safe zone Android may crop to a circle/squircle
+    app_icon(512, .66).save("img/icon-maskable-512.png", optimize=True)
+    app_icon(180, .86).save("img/apple-touch-icon.png", optimize=True)

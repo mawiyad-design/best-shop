@@ -732,3 +732,38 @@ html[dir="rtl"] .drawer[open] { animation-name: drawer-in-rtl; }
   margin-inline-start: auto; min-height: 36px; padding: 0 14px; border-radius: 999px; border: 0;
   background: var(--cyan); color: #04202a; font: 800 .82rem var(--font);
 }
+
+/* ============ Installable app ============ */
+.install {
+  position: fixed; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); inset-inline-start: 16px; z-index: 61;
+  display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 999px;
+  background: rgba(10, 12, 32, .9); border: 1px solid rgba(139, 92, 246, .6);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 0 26px rgba(139, 92, 246, .45);
+  animation: install-in .5s var(--ease) both .8s;
+}
+@keyframes install-in { from { opacity: 0; transform: translateY(20px); } }
+.install__btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 8px; border: 0; border-radius: 999px;
+  background: linear-gradient(90deg, var(--violet), var(--magenta)); color: #fff; font: 800 .92rem var(--font);
+}
+.install__btn img { width: 28px; height: 28px; border-radius: 8px; }
+.install__x { width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: var(--muted); }
+.install__x:hover { color: #fff; }
+.ios-install { display: grid; justify-items: center; text-align: center; gap: 12px; padding-block: 8px 12px; }
+.ios-install img { border-radius: 18px; box-shadow: 0 0 30px rgba(255, 240, 0, .4); }
+.ios-install h2 { font-size: 1.4rem; margin: 0; }
+.ios-install ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; text-align: start; }
+.ios-install li { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+.ios-install li svg.lucide { width: 38px; height: 38px; padding: 9px; border-radius: 50%; background: var(--yellow-soft); color: var(--yellow); border: 1px solid rgba(255, 240, 0, .4); }
+
+/* Safe areas when opened as an installed app (notch / home bar) */
+.wa-float { bottom: calc(22px + env(safe-area-inset-bottom, 0px)); }
+.basket-fab { bottom: calc(92px + env(safe-area-inset-bottom, 0px)); }
+.header { padding-top: env(safe-area-inset-top, 0px); height: calc(var(--header-h) + env(safe-area-inset-top, 0px)); }
+@media (display-mode: standalone) {
+  .topbar { display: none; }
+}
+@media (max-width: 600px) {
+  .install { bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+  .install__btn { font-size: .85rem; }
+}

@@ -120,6 +120,12 @@
       "basket.cliqName": "Account name",
       "basket.copy": "Copy",
       "basket.copied": "Copied",
+      "app.install": "Install the app",
+      "app.iosTitle": "Add Best Shop to your Home Screen",
+      "app.ios1": "Tap the Share button at the bottom of Safari",
+      "app.ios2": "Choose “Add to Home Screen”",
+      "app.ios3": "Tap “Add” — Best Shop opens like an app",
+      "app.dismiss": "Not now",
       "basket.send": "Send order on WhatsApp",
       "basket.clear": "Empty basket",
       "basket.required": "Please add your name and delivery address.",
@@ -245,6 +251,12 @@
       "basket.cliqName": "اسم الحساب",
       "basket.copy": "نسخ",
       "basket.copied": "تم النسخ",
+      "app.install": "ثبّت التطبيق",
+      "app.iosTitle": "أضف بست شوب إلى الشاشة الرئيسية",
+      "app.ios1": "اضغط زر المشاركة أسفل متصفح سفاري",
+      "app.ios2": "اختر «إضافة إلى الشاشة الرئيسية»",
+      "app.ios3": "اضغط «إضافة» — وسيفتح بست شوب كتطبيق",
+      "app.dismiss": "ليس الآن",
       "basket.send": "أرسل الطلب عبر واتساب",
       "basket.clear": "إفراغ السلة",
       "basket.required": "يرجى إدخال الاسم وعنوان التوصيل.",
@@ -820,6 +832,58 @@
   }));
 
   $("#year").textContent = new Date().getFullYear();
+
+  // ---------- Installable app ----------
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+  }
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  let installEvent = null;
+  let dismissed = false;
+  try { dismissed = localStorage.getItem("bs-install-dismissed") === "1"; } catch (e) {}
+
+  function showInstall() {
+    if (standalone || dismissed || $("#installBtn")) return;
+    document.body.insertAdjacentHTML("beforeend", `
+      <div class="install" id="installBar">
+        <button class="install__btn" id="installBtn" type="button">
+          <img src="img/icon-192.png" alt="" width="28" height="28"><span data-i18n="app.install">${t("app.install")}</span>
+        </button>
+        <button class="install__x" id="installX" type="button" aria-label="${esc(t("app.dismiss"))}"><i data-lucide="x" aria-hidden="true"></i></button>
+      </div>`);
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  window.addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); installEvent = e; showInstall(); });
+  window.addEventListener("appinstalled", () => { const b = $("#installBar"); if (b) b.remove(); });
+  if (isIOS && !standalone) showInstall();
+
+  document.addEventListener("click", async (e) => {
+    if (e.target.closest("#installX")) {
+      $("#installBar").remove();
+      try { localStorage.setItem("bs-install-dismissed", "1"); } catch (err) {}
+      return;
+    }
+    if (!e.target.closest("#installBtn")) return;
+    if (installEvent) {
+      installEvent.prompt();
+      const choice = await installEvent.userChoice;
+      if (choice.outcome === "accepted") $("#installBar").remove();
+      installEvent = null;
+    } else {
+      openViewer(`
+        <div class="ios-install">
+          <img src="img/icon-192.png" alt="" width="72" height="72">
+          <h2>${t("app.iosTitle")}</h2>
+          <ol>
+            <li><i data-lucide="share" aria-hidden="true"></i><span>${t("app.ios1")}</span></li>
+            <li><i data-lucide="square-plus" aria-hidden="true"></i><span>${t("app.ios2")}</span></li>
+            <li><i data-lucide="check" aria-hidden="true"></i><span>${t("app.ios3")}</span></li>
+          </ol>
+        </div>`);
+    }
+  });
 
   // Shared helpers for products.js
   window.BS = {
