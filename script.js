@@ -114,6 +114,12 @@
       "basket.notes": "Notes (optional)",
       "basket.payment": "Payment",
       "basket.cash": "Cash on delivery",
+      "basket.cliq": "CliQ (instant bank transfer)",
+      "basket.cliqHow": "Send your order first. After we confirm the final total on WhatsApp, pay it with CliQ from your bank app, then send us the transfer screenshot.",
+      "basket.cliqAlias": "CliQ alias",
+      "basket.cliqName": "Account name",
+      "basket.copy": "Copy",
+      "basket.copied": "Copied",
       "basket.send": "Send order on WhatsApp",
       "basket.clear": "Empty basket",
       "basket.required": "Please add your name and delivery address.",
@@ -233,6 +239,12 @@
       "basket.notes": "ملاحظات (اختياري)",
       "basket.payment": "الدفع",
       "basket.cash": "الدفع نقدًا عند الاستلام",
+      "basket.cliq": "كليك CliQ (تحويل بنكي فوري)",
+      "basket.cliqHow": "أرسل طلبك أولًا. بعد أن نؤكد المجموع النهائي عبر واتساب، ادفعه عبر كليك من تطبيق البنك، ثم أرسل لنا صورة التحويل.",
+      "basket.cliqAlias": "الاسم المستعار (Alias)",
+      "basket.cliqName": "اسم الحساب",
+      "basket.copy": "نسخ",
+      "basket.copied": "تم النسخ",
       "basket.send": "أرسل الطلب عبر واتساب",
       "basket.clear": "إفراغ السلة",
       "basket.required": "يرجى إدخال الاسم وعنوان التوصيل.",
@@ -483,7 +495,18 @@
           <label><span>${t("basket.notes")}</span><input name="notes"></label>
           <fieldset class="pay">
             <legend>${t("basket.payment")}</legend>
-            <label class="pay__opt"><input type="radio" name="pay" value="cash" checked><span>${t("basket.cash")}</span></label>
+            <label class="pay__opt"><input type="radio" name="pay" value="cash" ${payMethod === "cash" ? "checked" : ""}><span>${t("basket.cash")}</span></label>
+            ${cliqEnabled() ? `
+            <label class="pay__opt"><input type="radio" name="pay" value="cliq" ${payMethod === "cliq" ? "checked" : ""}><span>${t("basket.cliq")}</span></label>
+            <div class="cliq-box" id="cliqBox" ${payMethod === "cliq" ? "" : "hidden"}>
+              <p>${t("basket.cliqHow")}</p>
+              <div class="cliq-box__row">
+                <span>${t("basket.cliqAlias")}</span>
+                <strong dir="ltr" id="cliqAlias">${esc(SITE.cliq.alias)}</strong>
+                <button class="cliq-copy" type="button" id="cliqCopy">${t("basket.copy")}</button>
+              </div>
+              <div class="cliq-box__row"><span>${t("basket.cliqName")}</span><strong>${esc(SITE.cliq.name)}</strong></div>
+            </div>` : ""}
           </fieldset>
           <p class="form-error" id="checkoutError" hidden></p>
           <button class="btn btn--wa btn--block" type="submit" ${short ? "disabled" : ""}>
@@ -494,6 +517,16 @@
     }
     if (window.lucide) window.lucide.createIcons();
   }
+
+  let payMethod = "cash";
+  const cliqEnabled = () => !!(SITE.cliq && SITE.cliq.alias && SITE.cliq.name);
+
+  document.addEventListener("change", (e) => {
+    if (e.target.name !== "pay") return;
+    payMethod = e.target.value;
+    const box = $("#cliqBox");
+    if (box) box.hidden = payMethod !== "cliq";
+  });
 
   function orderMessage(form) {
     const lines = basket.items().map((x) => `• ${x.q} × ${x.t} — ${formatPrice(x.p * x.q)}`);
@@ -506,7 +539,7 @@
       `${t("basket.name")}: ${form.name.value.trim()}`,
       `${t("basket.address")}: ${form.address.value.trim()}`,
       form.notes.value.trim() ? `${t("basket.notes")}: ${form.notes.value.trim()}` : null,
-      `${t("basket.payment")}: ${t("basket.cash")}`,
+      `${t("basket.payment")}: ${t(payMethod === "cliq" ? "basket.cliq" : "basket.cash")}`,
     ].filter((l) => l !== null).join("\n");
   }
 
@@ -555,8 +588,23 @@
       refreshAddButtons();
       return;
     }
+    if (e.target.closest("#cliqCopy")) {
+      const btn = e.target.closest("#cliqCopy");
+      const done = () => { btn.textContent = t("basket.copied"); setTimeout(() => (btn.textContent = t("basket.copy")), 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(SITE.cliq.alias).then(done, () => selectAlias());
+      else selectAlias();
+      return;
+    }
     if (e.target.closest("#basketClear")) { basket.clear(); renderBasket(); refreshAddButtons(); }
   });
+
+  function selectAlias() {
+    const r = document.createRange();
+    r.selectNodeContents($("#cliqAlias"));
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+  }
 
   document.addEventListener("submit", (e) => {
     if (e.target.id !== "checkoutForm") return;

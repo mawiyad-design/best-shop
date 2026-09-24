@@ -719,3 +719,16 @@ html[dir="rtl"] .drawer[open] { animation-name: drawer-in-rtl; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; filter: none; }
 }
+
+/* ============ CliQ payment details ============ */
+.cliq-box {
+  display: grid; gap: 10px; padding: 14px; border-radius: 12px;
+  background: rgba(34, 211, 238, .08); border: 1px solid rgba(34, 211, 238, .4);
+}
+.cliq-box p { margin: 0; font-size: .85rem; color: var(--muted); }
+.cliq-box__row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; font-size: .88rem; color: var(--muted); }
+.cliq-box__row strong { font-family: var(--font-display); font-size: 1.05rem; color: #fff; user-select: all; }
+.cliq-copy {
+  margin-inline-start: auto; min-height: 36px; padding: 0 14px; border-radius: 999px; border: 0;
+  background: var(--cyan); color: #04202a; font: 800 .82rem var(--font);
+}

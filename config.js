@@ -30,6 +30,11 @@ window.SITE = {
   // Basket orders sent from the website (via WhatsApp) must reach this total.
   minOrder: 5,
 
+  // CliQ instant bank transfer. The CliQ payment option appears in the basket
+  // only when both alias and name are filled in.
+  // TODO: add the store's CliQ alias and the account name customers will see.
+  cliq: { alias: "", name: "" },
+
   // Opening hours. Day numbers: 0 = Sunday ... 6 = Saturday. 24-hour times.
   // A closing time earlier than the opening time means "after midnight".
   hours: [
