@@ -1,22 +1,34 @@
 # Best Shop — Supermarket Website
 
-A fast, bilingual (English / Arabic) one-page website for Best Shop.
+Bilingual (English / Arabic) website for Best Shop, Al-Gardens, Amman.
+Highlights our specialty: imported products from the USA & Europe.
 
-## Edit your store details
+## Pages
 
-Open **`config.js`** and change:
+- `index.html` — home: imported showcase, weekly offer posters, departments, ordering, location
+- `products.html` — full catalog with search, departments, "Imported only" filter
 
-- `phone`, `whatsapp`, `email` — contact details
-- `social` — Facebook, Instagram and Talabat links
-- `address`, `mapQuery` — your location and map
-- `hours` — opening hours (the "Open now" badge updates automatically)
-- `currency` — the symbol shown next to prices
-- `offers` — this week's deals
+## Edit store details
+
+Open **`config.js`**: phone, WhatsApp, email, address, map pin, social links, opening hours
+and the weekly offer posters (put new poster images in `img/offers/`).
+
+## Refresh the product catalog from Talabat
+
+```bash
+python tools/fetch_talabat.py
+```
+
+```bash
+python tools/build_catalog.py
+```
+
+## Logo
+
+`tools/make_logo.py` redraws the logo at high resolution into `img/` (brand colors #FFF000 / black).
 
 ## Preview locally
 
 ```bash
 python -m http.server 5500
 ```
-
-Then open http://localhost:5500.

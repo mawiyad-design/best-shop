@@ -3,38 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Best Shop — Your Favorite Store in Al-Gardens, Amman</title>
-  <meta name="description" content="Best Shop supermarket in Al-Gardens, Amman. Everything at the best price: fresh meat and chicken, cheeses, salads and daily essentials. Open daily 7 AM – 2 AM. Delivery available.">
-  <meta name="theme-color" content="#ffe500">
-  <meta property="og:title" content="Best Shop — Your Favorite Store">
-  <meta property="og:description" content="Everything at the best price. Al-Gardens, Amman. Open daily 7 AM – 2 AM. Delivery available.">
-  <meta property="og:image" content="logo.jpg">
-  <link rel="icon" href="logo.jpg" type="image/jpeg">
-  <link rel="apple-touch-icon" href="logo.jpg">
+  <title>Best Shop — Imported Favorites from the USA & Europe | Al-Gardens, Amman</title>
+  <meta name="description" content="Best Shop supermarket in Al-Gardens, Amman: hard-to-find imported products from the USA and Europe, fresh meat and chicken, cheeses and daily essentials at the best price. Open until 2 AM. Delivery available.">
+  <meta name="theme-color" content="#fff000">
+  <meta property="og:title" content="Best Shop — Imported favorites from the USA & Europe">
+  <meta property="og:description" content="Al-Gardens, Amman. 4,000+ products, imported specialties, open until 2 AM, delivery available.">
+  <meta property="og:image" content="img/logo-square.png">
+  <link rel="icon" href="img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://talabat.dhmedia.io">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-page="home">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 
   <!-- ===== Announcement bar ===== -->
   <div class="topbar">
     <div class="container topbar__inner">
-      <span><i data-lucide="clock" aria-hidden="true"></i><span data-i18n="top.hours">Open daily 7 AM – 2 AM</span></span>
+      <a href="#imports"><span aria-hidden="true">✈️</span><span data-i18n="top.imports">Imported from the USA & Europe</span></a>
       <span class="topbar__sep" aria-hidden="true">•</span>
-      <span><i data-lucide="truck" aria-hidden="true"></i><span data-i18n="top.delivery">Delivery available</span></span>
+      <span><i data-lucide="clock" aria-hidden="true"></i><span data-i18n="top.hours">Open until 2 AM, every day</span></span>
       <span class="topbar__sep hide-sm" aria-hidden="true">•</span>
-      <a class="hide-sm" data-link="phone" href="#"><i data-lucide="phone" aria-hidden="true"></i><span data-site="phoneLocal" dir="ltr"></span></a>
+      <span class="hide-sm"><i data-lucide="truck" aria-hidden="true"></i><span data-i18n="top.delivery">Delivery available</span></span>
     </div>
   </div>
 
   <!-- ===== Header ===== -->
   <header class="header" id="top">
     <div class="container header__inner">
-      <a href="#top" class="brand" aria-label="Best Shop — home">
-        <img class="brand__logo" src="logo.jpg" alt="" width="52" height="52">
+      <a href="index.html" class="brand" aria-label="Best Shop — home">
+        <img class="brand__logo" src="img/logo-512.png" alt="" width="52" height="52">
         <span class="brand__text">
           <span class="brand__name" data-site="name">Best Shop</span>
           <span class="brand__tag" data-site="tagline">Your favorite store</span>
@@ -42,7 +43,8 @@
       </a>
 
       <nav class="nav" id="nav" aria-label="Main">
-        <a href="#categories" data-i18n="nav.categories">Departments</a>
+        <a href="#imports" data-i18n="nav.imports">Imported</a>
+        <a href="products.html" data-i18n="nav.products">All Products</a>
         <a href="#offers" data-i18n="nav.offers">Offers</a>
         <a href="#order" data-i18n="nav.order">Order</a>
         <a href="#visit" data-i18n="nav.visit">Visit Us</a>
@@ -67,27 +69,30 @@
     <section class="hero">
       <div class="container hero__inner">
         <div class="hero__text">
-          <span class="status" id="openStatus"><span class="status__dot"></span><span class="status__text"></span></span>
+          <div class="hero__badges">
+            <span class="status" id="openStatus"><span class="status__dot"></span><span class="status__text"></span></span>
+            <a class="import-pill" href="#imports"><span aria-hidden="true">✈️</span><span data-i18n="hero.importPill">Imported from the USA & Europe</span></a>
+          </div>
           <h1 data-i18n="hero.title">Everything at the <span class="hl">best price.</span></h1>
-          <p class="lead" data-i18n="hero.lead">Your neighborhood supermarket in Al-Gardens — all your daily groceries, fresh meat and chicken, cheeses and salads, under one roof.</p>
+          <p class="lead" data-i18n="hero.lead">Your neighborhood supermarket in Al-Gardens — hard-to-find imported favorites from the USA and Europe, plus fresh meat and chicken, cheeses and all your daily groceries.</p>
           <div class="hero__cta">
-            <a class="btn btn--dark" data-link="talabat" href="#" target="_blank" rel="noopener"><i data-lucide="shopping-bag" aria-hidden="true"></i><span data-i18n="cta.talabat">Order on Talabat</span></a>
-            <a class="btn btn--outline" data-link="whatsapp" href="#" target="_blank" rel="noopener"><i data-lucide="message-circle" aria-hidden="true"></i><span data-i18n="cta.whatsapp">Order on WhatsApp</span></a>
+            <a class="btn btn--dark" href="#imports"><span aria-hidden="true">✈️</span><span data-i18n="cta.imports">Shop imported products</span></a>
+            <a class="btn btn--outline" href="products.html"><i data-lucide="layout-grid" aria-hidden="true"></i><span data-i18n="cta.allProducts">Browse all products</span></a>
           </div>
           <ul class="hero__facts">
-            <li><i data-lucide="clock" aria-hidden="true"></i><div><strong data-i18n="facts.hoursVal">7 AM – 2 AM</strong><span data-i18n="facts.hours">open daily</span></div></li>
+            <li><i data-lucide="package" aria-hidden="true"></i><div><strong data-count="total">4,000+</strong><span data-i18n="facts.products">products</span></div></li>
+            <li><i data-lucide="clock" aria-hidden="true"></i><div><strong data-i18n="facts.hoursVal">Until 2 AM</strong><span data-i18n="facts.hours">every day</span></div></li>
             <li><i data-lucide="truck" aria-hidden="true"></i><div><strong data-i18n="facts.deliveryVal">Delivery</strong><span data-i18n="facts.delivery">to your door</span></div></li>
-            <li><i data-lucide="star" aria-hidden="true"></i><div><strong data-i18n="facts.pointsVal">Points</strong><span data-i18n="facts.points">loyalty program</span></div></li>
           </ul>
         </div>
 
         <div class="hero__visual" aria-hidden="true">
           <div class="hero__ring"></div>
-          <img class="hero__logo" src="logo.jpg" alt="" width="400" height="400">
-          <span class="chip chip--1"><i data-lucide="beef"></i><span data-i18n="chip.meat">Fresh meat & chicken</span></span>
-          <span class="chip chip--2"><i data-lucide="salad"></i><span data-i18n="chip.salads">Salads</span></span>
+          <img class="hero__logo" src="img/logo.png" alt="" width="600" height="600">
+          <span class="chip chip--1"><span>✈️</span><span data-i18n="chip.imports">USA & Europe imports</span></span>
+          <span class="chip chip--2"><i data-lucide="beef"></i><span data-i18n="chip.meat">Fresh meat & chicken</span></span>
           <span class="chip chip--3"><i data-lucide="milk"></i><span data-i18n="chip.cheese">Cheeses</span></span>
-          <span class="chip chip--4"><i data-lucide="shopping-basket"></i><span data-i18n="chip.daily">Daily essentials</span></span>
+          <span class="chip chip--4"><i data-lucide="badge-percent"></i><span data-i18n="chip.price">Best prices</span></span>
         </div>
       </div>
     </section>
@@ -97,16 +102,55 @@
       <div class="marquee__track" id="marquee"></div>
     </div>
 
+    <!-- ===== Imported specialty ===== -->
+    <section class="section section--imports" id="imports">
+      <div class="container">
+        <div class="imports__head">
+          <div>
+            <span class="eyebrow eyebrow--dark"><span aria-hidden="true">✈️</span> <span data-i18n="imp.eyebrow">Our specialty</span></span>
+            <h2 data-i18n="imp.title">Imported from the USA & Europe</h2>
+            <p data-i18n="imp.lead">The American and European brands you can't find anywhere else in the neighborhood — chocolates, snacks, baking mixes, cereals, drinks and more, hand-picked by Best Shop.</p>
+          </div>
+          <div class="imports__stat">
+            <strong data-count="imported">95</strong>
+            <span data-i18n="imp.stat">imported products in store now</span>
+          </div>
+        </div>
+        <div class="product-grid product-grid--home" id="importGrid"></div>
+        <p class="center-cta">
+          <a class="btn btn--dark" href="products.html?imported=1"><span aria-hidden="true">✈️</span><span data-i18n="imp.cta">See all imported products</span><i data-lucide="arrow-right" class="flip-rtl" aria-hidden="true"></i></a>
+        </p>
+      </div>
+    </section>
+
     <!-- ===== Features ===== -->
     <section class="section section--features" aria-labelledby="whyTitle">
       <div class="container">
         <h2 class="sr-only" id="whyTitle" data-i18n="why.title">Why Best Shop</h2>
         <div class="features__grid">
-          <div class="feature"><span class="feature__icon"><i data-lucide="badge-percent" aria-hidden="true"></i></span><h3 data-i18n="f1.t">The best price</h3><p data-i18n="f1.d">Everything you need at prices that respect your budget.</p></div>
-          <div class="feature"><span class="feature__icon"><i data-lucide="beef" aria-hidden="true"></i></span><h3 data-i18n="f2.t">Fresh every day</h3><p data-i18n="f2.d">Fresh meat and chicken, cheeses and salads daily.</p></div>
-          <div class="feature"><span class="feature__icon"><i data-lucide="truck" aria-hidden="true"></i></span><h3 data-i18n="f3.t">Fast delivery</h3><p data-i18n="f3.d">Order by WhatsApp or Talabat — we bring it to you.</p></div>
-          <div class="feature"><span class="feature__icon"><i data-lucide="star" aria-hidden="true"></i></span><h3 data-i18n="f4.t">Points program</h3><p data-i18n="f4.d">Collect points every time you shop with us.</p></div>
+          <div class="feature"><span class="feature__icon"><i data-lucide="plane" aria-hidden="true"></i></span><h3 data-i18n="f1.t">Imported specialties</h3><p data-i18n="f1.d">Hard-to-find brands from the USA and Europe, always in stock.</p></div>
+          <div class="feature"><span class="feature__icon"><i data-lucide="badge-percent" aria-hidden="true"></i></span><h3 data-i18n="f2.t">The best price</h3><p data-i18n="f2.d">Everything you need at prices that respect your budget.</p></div>
+          <div class="feature"><span class="feature__icon"><i data-lucide="beef" aria-hidden="true"></i></span><h3 data-i18n="f3.t">Fresh every day</h3><p data-i18n="f3.d">Fresh meat and chicken, cheeses and salads daily.</p></div>
+          <div class="feature"><span class="feature__icon"><i data-lucide="truck" aria-hidden="true"></i></span><h3 data-i18n="f4.t">Fast delivery</h3><p data-i18n="f4.d">Order by WhatsApp or Talabat — we bring it to you.</p></div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== Offers ===== -->
+    <section class="section section--dark" id="offers">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow eyebrow--yellow" data-i18n="off.eyebrow">Special offers</span>
+          <h2 data-i18n="off.title">This week's offers</h2>
+          <p data-i18n="off.sub">Prices valid in store while stocks last. Tap a poster to see it full size.</p>
+        </div>
+        <div class="poster-grid" id="offerGrid"></div>
+        <p class="center-cta">
+          <a class="btn btn--yellow" data-link="instagram" href="#" target="_blank" rel="noopener">
+            <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor"/></svg>
+            <span data-i18n="off.more">More offers on Instagram</span>
+          </a>
+        </p>
       </div>
     </section>
 
@@ -116,31 +160,14 @@
         <div class="section__head">
           <span class="eyebrow" data-i18n="cat.eyebrow">Shop by department</span>
           <h2 data-i18n="cat.title">Everything you need, in one place</h2>
+          <p><span data-count="total">4,000+</span> <span data-i18n="cat.sub">products across every aisle.</span></p>
         </div>
-        <div class="cat-grid" id="catGrid"></div>
-      </div>
-    </section>
-
-    <!-- ===== Offers ===== -->
-    <section class="section section--dark" id="offers">
-      <div class="container">
-        <div class="section__head">
-          <span class="eyebrow eyebrow--yellow" data-i18n="off.eyebrow">This week only</span>
-          <h2 data-i18n="off.title">Weekly offers</h2>
-          <p data-i18n="off.sub">Prices valid in store while stocks last.</p>
-        </div>
-        <div class="offer-grid" id="offerGrid"></div>
-        <p class="offers__more">
-          <a class="btn btn--yellow" data-link="instagram" href="#" target="_blank" rel="noopener">
-            <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor"/></svg>
-            <span data-i18n="off.more">More offers on Instagram</span>
-          </a>
-        </p>
+        <div class="dept-grid" id="catGrid"></div>
       </div>
     </section>
 
     <!-- ===== Order ===== -->
-    <section class="section" id="order">
+    <section class="section section--tight" id="order">
       <div class="container">
         <div class="order">
           <div class="order__text">
@@ -154,8 +181,8 @@
             </ol>
           </div>
           <div class="order__cards">
-            <a class="order-card order-card--wa" data-link="whatsapp" href="#" target="_blank" rel="noopener">
-              <span class="order-card__icon"><i data-lucide="message-circle" aria-hidden="true"></i></span>
+            <a class="order-card" data-link="whatsapp" href="#" target="_blank" rel="noopener">
+              <span class="order-card__icon order-card__icon--wa"><i data-lucide="message-circle" aria-hidden="true"></i></span>
               <span class="order-card__body"><strong data-i18n="order.wa">Order on WhatsApp</strong><span data-site="phoneLocal" dir="ltr"></span></span>
               <i data-lucide="arrow-up-right" class="order-card__arrow" aria-hidden="true"></i>
             </a>
@@ -213,11 +240,11 @@
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__brand">
-        <a href="#top" class="brand brand--light">
-          <img class="brand__logo" src="logo.jpg" alt="" width="52" height="52">
+        <a href="index.html" class="brand brand--light">
+          <img class="brand__logo" src="img/logo-512.png" alt="" width="52" height="52">
           <span class="brand__text"><span class="brand__name" data-site="name">Best Shop</span><span class="brand__tag" data-site="tagline">Your favorite store</span></span>
         </a>
-        <p data-i18n="footer.tag">Everything at the best price.</p>
+        <p data-i18n="footer.tag">Imported favorites from the USA & Europe — everything at the best price.</p>
         <div class="social">
           <a data-link="facebook" href="#" target="_blank" rel="noopener" aria-label="Facebook">
             <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg>
@@ -225,19 +252,15 @@
           <a data-link="instagram" href="#" target="_blank" rel="noopener" aria-label="Instagram">
             <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor"/></svg>
           </a>
-          <a data-link="whatsapp" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
-            <i data-lucide="message-circle" aria-hidden="true"></i>
-          </a>
-          <a data-link="email" href="#" aria-label="Email">
-            <i data-lucide="mail" aria-hidden="true"></i>
-          </a>
+          <a data-link="whatsapp" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><i data-lucide="message-circle" aria-hidden="true"></i></a>
+          <a data-link="email" href="#" aria-label="Email"><i data-lucide="mail" aria-hidden="true"></i></a>
         </div>
       </div>
       <nav class="footer__col" aria-label="Footer">
         <h3 data-i18n="footer.explore">Explore</h3>
-        <a href="#categories" data-i18n="nav.categories">Departments</a>
+        <a href="products.html?imported=1" data-i18n="nav.imports">Imported</a>
+        <a href="products.html" data-i18n="nav.products">All Products</a>
         <a href="#offers" data-i18n="nav.offers">Offers</a>
-        <a href="#order" data-i18n="nav.order">Order</a>
         <a href="#visit" data-i18n="nav.visit">Visit Us</a>
       </nav>
       <div class="footer__col">
@@ -250,10 +273,15 @@
     </div>
   </footer>
 
-  <!-- Floating WhatsApp button -->
   <a class="wa-float" data-link="whatsapp" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
     <i data-lucide="message-circle" aria-hidden="true"></i>
   </a>
+
+  <!-- Poster / product viewer -->
+  <dialog class="viewer" id="viewer" aria-label="Details">
+    <button class="viewer__close" type="button" data-close aria-label="Close"><i data-lucide="x" aria-hidden="true"></i></button>
+    <div class="viewer__body" id="viewerBody"></div>
+  </dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.min.js"></script>
   <script src="config.js"></script>

@@ -10,25 +10,25 @@ window.SITE = {
   phone: "+962 7 9158 0780",
   phoneLocal: "07 9158 0780",
   whatsapp: "962791580780",
-  email: "supermarketbestshop@gmail.com",
+  email: "bestshob516@gmail.com",
 
   address: {
     en: "Al-Gardens, Al-Baraka District, next to Al-Omariya Schools, Amman, Jordan",
     ar: "الجاردنز - حي البركة - بجانب مدارس العمرية، عمّان، الأردن",
   },
   mapQuery: "Best Shop Supermarket, Al-Gardens, Amman, Jordan",
+  mapLatLng: "31.9893676,35.8855916",
 
   social: {
     facebook: "https://www.facebook.com/supermarketbestshop/",
     instagram: "https://www.instagram.com/supermarketbestshop/",
-    talabat: "https://www.talabat.com/jordan/best-shop-supermarket",
+    talabat: "https://www.talabat.com/jordan/grocery/1104142/best-shop-tla-ali?aid=4894",
   },
 
   currency: { en: "JD", ar: "د.أ" },
 
   // Opening hours. Day numbers: 0 = Sunday ... 6 = Saturday. 24-hour times.
   // A closing time earlier than the opening time means "after midnight".
-  // TODO: confirm Friday and Saturday hours.
   hours: [
     { day: 6, open: "07:00", close: "02:00" },
     { day: 0, open: "07:00", close: "02:00" },
@@ -36,16 +36,14 @@ window.SITE = {
     { day: 2, open: "07:00", close: "02:00" },
     { day: 3, open: "07:00", close: "02:00" },
     { day: 4, open: "07:00", close: "02:00" },
-    { day: 5, open: "07:00", close: "02:00" },
+    { day: 5, open: "10:00", close: "02:00" },
   ],
 
-  // Weekly offers. TODO: replace these SAMPLE offers with your real ones each week.
+  // Weekly offers: poster image + name + price. Replace them whenever you have new posters.
   offers: [
-    { icon: "beef",      en: "Fresh Chicken (1 kg)",   ar: "دجاج طازج (1 كغ)",     was: 2.95, now: 2.49 },
-    { icon: "milk",      en: "Fresh Milk (2 L)",       ar: "حليب طازج (2 لتر)",    was: 1.95, now: 1.65 },
-    { icon: "salad",     en: "Fresh Salads (500 g)",   ar: "سلطات طازجة (500 غ)",  was: 1.50, now: 1.20 },
-    { icon: "utensils",      en: "White Cheese (1 kg)",    ar: "جبنة بيضاء (1 كغ)",    was: 4.50, now: 3.75 },
-    { icon: "coffee",    en: "Arabic Coffee (500 g)",  ar: "قهوة عربية (500 غ)",   was: 6.00, now: 4.95 },
-    { icon: "apple",     en: "Red Apples (1 kg)",      ar: "تفاح أحمر (1 كغ)",     was: 1.25, now: 0.99 },
+    { img: "img/offers/mandi-rice.jpg",  en: "Mandi Basmati Rice, 4 kg",   ar: "أرز مندي، 4 كيلو",          price: 4.60 },
+    { img: "img/offers/leeza-oil.jpg",   en: "Leeza Sunflower Oil, 1.5 L", ar: "زيت ليزا، 1.5 لتر",         price: 2.50 },
+    { img: "img/offers/tayba-juice.jpg", en: "Tayba Juice, 1 L",           ar: "عصير طيبة، 1 لتر",          price: 0.59 },
+    { img: "img/offers/tiger-rice.jpg",  en: "Tiger Premium Rice, 3 kg",   ar: "أرز تايجر الممتاز، 3 كيلو", price: 2.99 },
   ],
 };
