@@ -9,7 +9,9 @@
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(pointer: fine)").matches;
   const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-  const HUES = [270, 320, 190, 55];   // violet, magenta, cyan, brand yellow
+  // Brand-yellow theme: no star field, and a darker trail that shows on yellow
+  const light = document.documentElement.classList.contains("theme-yellow");
+  const HUES = light ? [270, 320, 205, 0] : [270, 320, 190, 55];   // violet, magenta, cyan/blue, yellow/red
 
   const bg = document.createElement("canvas");
   const fx = document.createElement("canvas");
@@ -52,6 +54,7 @@
   let shooting = null;
   function drawStars(time) {
     bctx.clearRect(0, 0, W, H);
+    if (light) return;
     pointer.x += (pointer.tx - pointer.x) * 0.05;
     pointer.y += (pointer.ty - pointer.y) * 0.05;
     const scroll = window.scrollY;
@@ -113,7 +116,7 @@
   function drawParticles() {
     fctx.clearRect(0, 0, W, H);
     if (!particles.length) return;
-    fctx.globalCompositeOperation = "lighter";
+    fctx.globalCompositeOperation = light ? "source-over" : "lighter";
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.x += p.vx; p.y += p.vy; p.vx *= 0.97; p.vy *= 0.97; p.vy -= 0.01;
@@ -121,8 +124,8 @@
       if (p.life <= 0) { particles.splice(i, 1); continue; }
       const r = p.size * (0.4 + p.life);
       const g = fctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3);
-      g.addColorStop(0, `hsla(${p.hue}, 100%, 80%, ${p.life})`);
-      g.addColorStop(0.35, `hsla(${p.hue}, 100%, 60%, ${p.life * 0.5})`);
+      g.addColorStop(0, `hsla(${p.hue}, 100%, ${light ? 55 : 80}%, ${p.life})`);
+      g.addColorStop(0.35, `hsla(${p.hue}, 100%, ${light ? 45 : 60}%, ${p.life * 0.5})`);
       g.addColorStop(1, `hsla(${p.hue}, 100%, 50%, 0)`);
       fctx.fillStyle = g;
       fctx.beginPath(); fctx.arc(p.x, p.y, r * 3, 0, Math.PI * 2); fctx.fill();

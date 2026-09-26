@@ -3,7 +3,7 @@
    - App files (CSS, JS, logos, posters): network first too, so updates show at once
    - Product photos from Talabat: cached as customers see them (up to 400)
    Bump VERSION whenever the site changes so phones pick up the new files. */
-const VERSION = "bs-v5";
+const VERSION = "bs-v6";
 const SHELL = `${VERSION}-shell`;
 const PHOTOS = `${VERSION}-photos`;
 const PHOTO_LIMIT = 400;
